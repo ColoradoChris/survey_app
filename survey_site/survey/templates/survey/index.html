@@ -1,0 +1,32 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'survey/style.css' %}" />
+
+<h1> {2018 Western Union Compliance Agent Survey} </h1>
+
+{% if latest_question_list %}
+<form method="post">{% csrf_token %}
+  <ul>
+    {% for surveyquestion in latest_question_list %}
+      <li>
+        {{ surveyquestion.question_text }}
+        {% for surveychoice in surveyquestion.surveychoice_set.all %}
+            <br />
+            {% if surveychoice.id == 1 %}
+              <label for = "choice {{ forloop.counter}}">{{surveychoice.choice_text }} </label><br />
+              <input type = "text" name = "choice" id = "choice {{forloop.counter }}"/>
+            {% else %}
+              <input type = "checkbox" name = "choice" id = "choice {{forloop.counter }}" value = "{{ surveychoice.id }}" />
+              <label for = "choice {{ forloop.counter}}">{{surveychoice.choice_text }} </label><br />
+            {% endif %}
+        {% endfor %}
+        <br />
+      </li>
+      <br />
+    {% endfor %}
+    <input type = "submit" value = "Submit" />
+  </ul>
+</form>
+{% else %}
+  <p> No questions are currently assigned. </p>
+{% endif %}
