@@ -1,0 +1,1 @@
+This application is meant to create surveys. From the admin/content management page you will be able to create a survey with questions and then choices that link to each of the questions. 
